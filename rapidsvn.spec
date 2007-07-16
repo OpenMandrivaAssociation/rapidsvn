@@ -5,7 +5,7 @@
 Summary:	A cross-platform GUI for the Subversion concurrent versioning system
 Name:		rapidsvn
 Version:	0.9.4
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	LGPL
 Group:		Development/Other
 URL:		http://rapidsvn.tigris.org
@@ -23,7 +23,6 @@ BuildRequires:	db4-devel
 BuildRequires:	docbook-style-xsl
 BuildPreReq:    libneon-devel >= 0.24.7
 BuildRequires:	autoconf2.5 >= 2.53
-BuildRequires:	automake1.7
 BuildRequires:	ImageMagick
 Requires(post): %{libname} = %{version}
 Requires(preun): %{libname} = %{version}
@@ -74,8 +73,8 @@ language like Python or Java.
 cp %{SOURCE1} rapidsvn_logo.png
 
 %build
-export WANT_AUTOCONF_2_5="1"
-libtoolize --copy --force && aclocal-1.7 && automake-1.7 --add-missing --foreign && autoconf
+#export WANT_AUTOCONF_2_5="1"
+#libtoolize --copy --force && aclocal-1.7 && automake-1.7 --add-missing --foreign && autoconf
 
 if [ -x %{_bindir}/apr-config ]; then APR=%{_bindir}/apr-config; fi
 if [ -x %{_bindir}/apu-config ]; then APU=%{_bindir}/apu-config; fi
@@ -83,7 +82,7 @@ if [ -x %{_bindir}/apu-config ]; then APU=%{_bindir}/apu-config; fi
 if [ -x %{_bindir}/apr-1-config ]; then APR=%{_bindir}/apr-1-config; fi
 if [ -x %{_bindir}/apu-1-config ]; then APU=%{_bindir}/apu-1-config; fi
 
-%configure2_5x \
+%configure \
     --enable-shared \
     --with-svn-include=%{_includedir} \
     --with-svn-lib=%{_libdir} \
@@ -109,18 +108,6 @@ convert rapidsvn_logo.png -resize 16x16 %{buildroot}%{_miconsdir}/%{name}.png
 convert rapidsvn_logo.png -resize 32x32 %{buildroot}%{_iconsdir}/%{name}.png
 convert rapidsvn_logo.png -resize 48x48 %{buildroot}%{_liconsdir}/%{name}.png
 
-# Mandriva Menus
-%{__install} -d %{buildroot}/%{_menudir}
-cat > %{buildroot}%{_menudir}/%{name} <<EOF
-?package(%{name}): \
-command="%{name}" \
-title="RapidSVN" \
-longtitle="GUI for Subversion" \
-needs="x11" \
-icon="%{name}.png" \
-section="Applications/Development/Tools" \
-xdg=true
-EOF
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
@@ -131,7 +118,7 @@ Exec=%{_bindir}/%{name}
 Icon=%{name}
 Terminal=false
 Type=Application
-Categories=X-MandrivaLinux-MoreApplications-Development-Tools;Development;RevisionControl;
+Categories=Development;RevisionControl;
 Encoding=UTF-8
 EOF
 
@@ -154,7 +141,6 @@ EOF
 %defattr(-,root,root)
 %doc html AUTHORS ChangeLog INSTALL NEWS README
 %{_bindir}/%{name}
-%{_menudir}/%{name}
 %{_datadir}/applications/mandriva-%{name}.desktop
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
