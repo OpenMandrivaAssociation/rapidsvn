@@ -21,7 +21,7 @@ BuildRequires:	wxGTK2.8-devel
 BuildRequires:	libxslt-proc
 BuildRequires:	db4-devel
 BuildRequires:	docbook-style-xsl
-BuildPreReq:    libneon-devel >= 0.24.7
+BuildRequires:	libneon-devel >= 0.24.7
 BuildRequires:	autoconf2.5 >= 2.53
 BuildRequires:	ImageMagick
 Requires(post): %{libname} = %{version}
@@ -156,5 +156,3 @@ EOF
 %{_libdir}/*.so
 %{_libdir}/*.a
 %{_libdir}/*.la
-
-
