@@ -27,7 +27,6 @@ BuildRequires:	ImageMagick
 Requires(post): %{libname} = %{version}
 Requires(preun): %{libname} = %{version}
 Requires:	subversion
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 RapidSVN is a platform independent GUI client for the Subversion
