@@ -1,11 +1,12 @@
 %define	major 0
 %define libname	%mklibname svncpp %{major}
 %define oldlibname %mklibname rapidsvn 0
+%define develname %mklibname svncpp -d
 
 Summary:	A cross-platform GUI for the Subversion concurrent versioning system
 Name:		rapidsvn
 Version:	0.9.4
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	LGPL
 Group:		Development/Other
 URL:		http://rapidsvn.tigris.org
@@ -21,9 +22,9 @@ BuildRequires:	wxGTK2.8-devel
 BuildRequires:	libxslt-proc
 BuildRequires:	db4-devel
 BuildRequires:	docbook-style-xsl
-BuildRequires:	libneon-devel >= 0.24.7
+BuildRequires:	neon0.26-devel >= 0.26.4
 BuildRequires:	autoconf2.5 >= 2.53
-BuildRequires:	ImageMagick
+BuildRequires:	imagemagick
 Requires(post): %{libname} = %{version}
 Requires(preun): %{libname} = %{version}
 Requires:	subversion
@@ -35,8 +36,6 @@ revision system written in C++ using the wxWindows framework.
 %package -n	%{libname}
 Summary:	RapidSVN shared SvnCpp C++ API libraries
 Group:          System/Libraries
-Provides:	%{oldlibname}
-Obsoletes:	%{oldlibname}
 
 %description -n	%{libname}
 RapidSVN is a platform independent GUI client for the Subversion
@@ -45,16 +44,17 @@ revision system written in C++ using the wxWindows framework.
 This package contains shared SvnCpp C++ API libraries for
 RapidSVN.
 
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	RapidSVN SvnCpp C++ API development libraries
 Group:		Development/C++
 Requires:	%{libname} = %{version}
-Provides:	lib%{name}-devel = %{version}
-Provides:	libsvncpp-devel = %{version}
-Provides:	%{oldlibname}-devel
+Provides:	lib%{name}-devel = %{version}-%{release}
+Provides:	libsvncpp-devel = %{version}-%{release}
+Provides:	%{oldlibname}-devel = %{version}-%{release}
 Obsoletes:	%{oldlibname}-devel
+Obsoletes:	%{mklibname svncpp -d 0}
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 As part of the RapidSVN effort it became clear that it would make
 the code easier to update and manage if the Subversion client C
 API were wrapped in C++. This is where SvnCpp comes from. Right
@@ -148,7 +148,7 @@ EOF
 %defattr(-,root,root)
 %{_libdir}/*.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %{_includedir}/svncpp
 %{_libdir}/*.so
