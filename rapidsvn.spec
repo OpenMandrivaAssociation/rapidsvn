@@ -5,9 +5,9 @@
 
 Summary:	A cross-platform GUI for the Subversion concurrent versioning system
 Name:		rapidsvn
-Version:	0.9.4
-Release:	%mkrel 4
-License:	LGPL
+Version:	0.9.6
+Release:	%mkrel 1
+License:	GPLv2+
 Group:		Development/Other
 URL:		http://rapidsvn.tigris.org
 Source0:	http://www.rapidsvn.org/download/%{name}-%{version}.tar.bz2
