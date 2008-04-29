@@ -6,7 +6,7 @@
 Summary:	A cross-platform GUI for the Subversion concurrent versioning system
 Name:		rapidsvn
 Version:	0.9.6
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPLv2+
 Group:		Development/Other
 URL:		http://rapidsvn.tigris.org
@@ -123,7 +123,7 @@ EOF
 
 %post
 %{update_menus}
-%update_icon_cahe hicolor
+%update_icon_cache hicolor
 
 %postun
 %{clean_menus}
