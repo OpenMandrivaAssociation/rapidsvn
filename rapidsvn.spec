@@ -6,12 +6,13 @@
 Summary:	A cross-platform GUI for the Subversion concurrent versioning system
 Name:		rapidsvn
 Version:	0.9.6
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	GPLv2+
 Group:		Development/Other
 URL:		http://rapidsvn.tigris.org
 Source0:	http://www.rapidsvn.org/download/%{name}-%{version}.tar.bz2
 Source1:	rapidsvn_logo.png
+Patch0:		rapidsvn-gcc43.patch
 BuildRequires:	apache-devel >= 2.0.54
 BuildRequires:	doxygen
 BuildRequires:	subversion-devel >= 1.2
@@ -68,6 +69,7 @@ language like Python or Java.
 %prep
 
 %setup -q
+%patch0 -p1
 
 cp %{SOURCE1} rapidsvn_logo.png
 
