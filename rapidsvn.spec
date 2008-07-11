@@ -13,6 +13,7 @@ URL:		http://rapidsvn.tigris.org
 Source0:	http://www.rapidsvn.org/download/%{name}-%{version}.tar.bz2
 Source1:	rapidsvn_logo.png
 Patch0:		rapidsvn-gcc43.patch
+Patch1:		rapidsvn-linkage_fix.diff
 BuildRequires:	apache-devel >= 2.0.54
 BuildRequires:	doxygen
 BuildRequires:	subversion-devel >= 1.2
@@ -70,18 +71,14 @@ language like Python or Java.
 
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 cp %{SOURCE1} rapidsvn_logo.png
 
 %build
+autoreconf -fis
 export CFLAGS="%{optflags} -fno-strict-aliasing"
 export CXXFLAGS=$CFLAGS
-
-if [ -x %{_bindir}/apr-config ]; then APR=%{_bindir}/apr-config; fi
-if [ -x %{_bindir}/apu-config ]; then APU=%{_bindir}/apu-config; fi
-
-if [ -x %{_bindir}/apr-1-config ]; then APR=%{_bindir}/apr-1-config; fi
-if [ -x %{_bindir}/apu-1-config ]; then APU=%{_bindir}/apu-1-config; fi
 
 %configure2_5x \
     --enable-shared \
@@ -89,8 +86,8 @@ if [ -x %{_bindir}/apu-1-config ]; then APU=%{_bindir}/apu-1-config; fi
     --with-svn-include=%{_includedir} \
     --with-svn-lib=%{_libdir} \
     --with-xsltproc=%{_bindir}/xsltproc \
-    --with-apr-config=$APR \
-    --with-apu-config=$APU \
+    --with-apr-config=%{_bindir}/apr-1-config \
+    --with-apu-config=%{_bindir}/apu-1-config \
     --with-neon-config=/bin/true
 
 %make
@@ -125,13 +122,13 @@ EOF
 
 %if %mdkversion < 200900
 %post
-%{update_menus}
+%update_menus
 %update_icon_cache hicolor
 %endif
 
 %if %mdkversion < 200900
 %postun
-%{clean_menus}
+%clean_menus
 %clean_icon_cache hicolor
 %endif
 
