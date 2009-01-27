@@ -76,6 +76,7 @@ language like Python or Java.
 cp %{SOURCE1} rapidsvn_logo.png
 
 %build
+%define Werror_cflags %nil
 autoreconf -fis
 export CFLAGS="%{optflags} -fno-strict-aliasing"
 export CXXFLAGS=$CFLAGS
