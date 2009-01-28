@@ -14,6 +14,7 @@ Source0:	http://www.rapidsvn.org/download/%{name}-%{version}.tar.bz2
 Source1:	rapidsvn_logo.png
 Patch0:		rapidsvn-gcc43.patch
 Patch1:		rapidsvn-linkage_fix.diff
+Patch2:		rapidsvn-0.9.6-format_not_a_string_literal_and_no_format_arguments.patch
 BuildRequires:	apache-devel >= 2.0.54
 BuildRequires:	doxygen
 BuildRequires:	subversion-devel >= 1.2
@@ -72,11 +73,11 @@ language like Python or Java.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 cp %{SOURCE1} rapidsvn_logo.png
 
 %build
-%define Werror_cflags %nil
 autoreconf -fis
 export CFLAGS="%{optflags} -fno-strict-aliasing"
 export CXXFLAGS=$CFLAGS
