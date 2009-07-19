@@ -76,7 +76,9 @@ language like Python or Java.
 cp %{SOURCE1} rapidsvn_logo.png
 
 %build
-autoreconf -fis
+mkdir src/tests/svncpp; touch src/tests/svncpp/Makefile.in
+aclocal; autoconf; libtoolize --automake --force; aclocal; automake -a
+
 export CFLAGS="%{optflags} -fno-strict-aliasing"
 export CXXFLAGS=$CFLAGS
 
