@@ -1,18 +1,18 @@
-%define	major 1
+%define	major 3
 %define libname	%mklibname svncpp %{major}
 %define oldlibname %mklibname rapidsvn 0
 %define develname %mklibname svncpp -d
 
 Summary:	A cross-platform GUI for the Subversion concurrent versioning system
 Name:		rapidsvn
-Version:	0.10.0
-Release:	%mkrel 2
+Version:	0.12.0
+Release:	%mkrel 1
 License:	GPLv2+
 Group:		Development/Other
 URL:		http://rapidsvn.tigris.org
-Source0:	http://www.rapidsvn.org/download/%{name}-%{version}.tar.gz
+Source0:	http://www.rapidsvn.org/download/release/%{version}/%{name}-%{version}-1.tar.gz
 Source1:	rapidsvn_logo.png
-Patch1:		rapidsvn-linkage_fix.diff
+Patch1:		rapidsvn-0.12.0-linkage_fix.patch
 Patch2:		rapidsvn-0.9.6-format_not_a_string_literal_and_no_format_arguments.patch
 BuildRequires:	apache-devel >= 2.0.54
 BuildRequires:	doxygen
@@ -23,7 +23,7 @@ BuildRequires:	wxGTK2.8-devel
 BuildRequires:	libxslt-proc
 BuildRequires:	db4.7-devel
 BuildRequires:	docbook-style-xsl
-#BuildRequires:	neon0.26-devel >= 0.26.4
+BuildRequires:	neon0.27-devel >= 0.27
 BuildRequires:	imagemagick
 BuildRequires:	libcppunit-devel
 Requires(post):	%{libname} = %{version}-%{release}
@@ -39,6 +39,7 @@ revision system written in C++ using the wxWindows framework.
 Summary:	RapidSVN shared SvnCpp C++ API libraries
 Group:		System/Libraries
 Obsoletes:	%mklibname svncpp 0
+Obsoletes:	%mklibname svncpp 1
 
 %description -n %{libname}
 RapidSVN is a platform independent GUI client for the Subversion
@@ -68,15 +69,14 @@ interface to any project that uses C++ or a SWIG-compatible
 language like Python or Java. 
 
 %prep
-
-%setup -q
+%setup -qn %{name}-%{version}-1
 %patch1 -p1
 %patch2 -p1
 
 cp %{SOURCE1} rapidsvn_logo.png
 
 %build
-mkdir src/tests/svncpp; touch src/tests/svncpp/Makefile.in
+#mkdir src/tests/svncpp; touch src/tests/svncpp/Makefile.in
 aclocal; autoconf; libtoolize --automake --force; aclocal; automake -a
 
 export CFLAGS="%{optflags} -fno-strict-aliasing"
@@ -89,16 +89,13 @@ export CXXFLAGS=$CFLAGS
     --with-svn-lib=%{_libdir} \
     --with-xsltproc=%{_bindir}/xsltproc \
     --with-apr-config=%{_bindir}/apr-1-config \
-    --with-apu-config=%{_bindir}/apu-1-config \
-    --with-neon-config=/bin/true
+    --with-apu-config=%{_bindir}/apu-1-config
 
 %make
 
 %install
 %{__rm} -rf %{buildroot}
-
 %makeinstall_std
-
 
 # Mandriva Icons
 install -d %{buildroot}%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
@@ -106,7 +103,6 @@ install -d %{buildroot}%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
 convert rapidsvn_logo.png -resize 16x16 %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
 convert rapidsvn_logo.png -resize 32x32 %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
 convert rapidsvn_logo.png -resize 48x48 %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
-
 
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
@@ -121,6 +117,8 @@ Categories=Development;RevisionControl;
 EOF
 
 %{__mv} doc/svncpp/html .
+
+%find_lang %{name}
 
 %if %mdkversion < 200900
 %post
@@ -145,7 +143,7 @@ EOF
 %clean
 %{__rm} -rf %{buildroot}
 
-%files
+%files -f %{name}.lang
 %defattr(-,root,root)
 %doc html AUTHORS ChangeLog NEWS README
 %{_bindir}/%{name}
