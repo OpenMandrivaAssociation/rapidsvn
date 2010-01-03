@@ -6,7 +6,7 @@
 Summary:	A cross-platform GUI for the Subversion concurrent versioning system
 Name:		rapidsvn
 Version:	0.12.0
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv2+
 Group:		Development/Other
 URL:		http://rapidsvn.tigris.org
@@ -21,7 +21,7 @@ BuildRequires:	subversion >= 1.2
 BuildRequires:	libtool >= 1.4.2
 BuildRequires:	wxGTK2.8-devel
 BuildRequires:	libxslt-proc
-BuildRequires:	db4.7-devel
+BuildRequires:	db4.8-devel
 BuildRequires:	docbook-style-xsl
 BuildRequires:	neon0.27-devel >= 0.27
 BuildRequires:	imagemagick
