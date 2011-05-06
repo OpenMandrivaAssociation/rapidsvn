@@ -21,7 +21,6 @@ BuildRequires:	subversion >= 1.2
 BuildRequires:	libtool >= 1.4.2
 BuildRequires:	wxGTK2.8-devel
 BuildRequires:	libxslt-proc
-BuildRequires:	db4.8-devel
 BuildRequires:	docbook-style-xsl
 BuildRequires:	neon0.27-devel >= 0.27
 BuildRequires:	imagemagick
