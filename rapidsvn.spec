@@ -13,7 +13,6 @@ URL:		http://rapidsvn.tigris.org
 Source0:	http://www.rapidsvn.org/download/release/%{version}/%{name}-%{version}-1.tar.gz
 Source1:	rapidsvn_logo.png
 Patch1:		rapidsvn-0.12.0-linkage_fix.patch
-Patch2:		rapidsvn-0.9.6-format_not_a_string_literal_and_no_format_arguments.patch
 BuildRequires:	apache-devel >= 2.0.54
 BuildRequires:	doxygen
 BuildRequires:	subversion-devel >= 1.2
@@ -22,7 +21,7 @@ BuildRequires:	libtool >= 1.4.2
 BuildRequires:	wxgtku-devel
 BuildRequires:	libxslt-proc
 BuildRequires:	docbook-style-xsl
-BuildRequires:	neon0.27-devel >= 0.27
+BuildRequires:	neon-devel >= 0.27
 BuildRequires:	imagemagick
 BuildRequires:	libcppunit-devel
 Requires(post):	%{libname} = %{version}-%{release}
@@ -69,7 +68,6 @@ language like Python or Java.
 %prep
 %setup -qn %{name}-%{version}-1
 %patch1 -p1
-%patch2 -p1
 
 %__cp %{SOURCE1} rapidsvn_logo.png
 
@@ -136,4 +134,7 @@ EOF
 %defattr(-,root,root)
 %{_includedir}/svncpp
 %{_libdir}/*.so
+%if %{mdvver} <= 201100
 %{_libdir}/*.la
+%endif
+
