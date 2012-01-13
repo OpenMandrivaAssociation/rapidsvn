@@ -1,12 +1,12 @@
 %define	major 3
-%define libname	%mklibname svncpp %{major}
-%define oldlibname %mklibname rapidsvn 0
-%define develname %mklibname svncpp -d
+%define	libname	%mklibname svncpp %{major}
+%define	oldlibname %mklibname rapidsvn 0
+%define	develname %mklibname svncpp -d
 
 Summary:	A cross-platform GUI for the Subversion concurrent versioning system
 Name:		rapidsvn
 Version:	0.12.0
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	GPLv2+
 Group:		Development/Other
 URL:		http://rapidsvn.tigris.org
@@ -19,7 +19,7 @@ BuildRequires:	doxygen
 BuildRequires:	subversion-devel >= 1.2
 BuildRequires:	subversion >= 1.2
 BuildRequires:	libtool >= 1.4.2
-BuildRequires:	wxGTK2.8-devel
+BuildRequires:	wxgtku-devel
 BuildRequires:	libxslt-proc
 BuildRequires:	docbook-style-xsl
 BuildRequires:	neon0.27-devel >= 0.27
@@ -28,7 +28,6 @@ BuildRequires:	libcppunit-devel
 Requires(post):	%{libname} = %{version}-%{release}
 Requires(preun): %{libname} = %{version}-%{release}
 Requires:	subversion
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 RapidSVN is a platform independent GUI client for the Subversion
@@ -72,7 +71,7 @@ language like Python or Java.
 %patch1 -p1
 %patch2 -p1
 
-cp %{SOURCE1} rapidsvn_logo.png
+%__cp %{SOURCE1} rapidsvn_logo.png
 
 %build
 #mkdir src/tests/svncpp; touch src/tests/svncpp/Makefile.in
@@ -93,18 +92,18 @@ export CXXFLAGS=$CFLAGS
 %make
 
 %install
-%{__rm} -rf %{buildroot}
+%__rm -rf %{buildroot}
 %makeinstall_std
 
 # Mandriva Icons
-install -d %{buildroot}%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
+%__install -d %{buildroot}%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
 
 convert rapidsvn_logo.png -resize 16x16 %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
 convert rapidsvn_logo.png -resize 32x32 %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
 convert rapidsvn_logo.png -resize 48x48 %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
+%__mkdir_p %{buildroot}%{_datadir}/applications
+%__cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
 [Desktop Entry]
 Name=RapidSVN
 Comment=%{summary}
@@ -115,32 +114,12 @@ Type=Application
 Categories=Development;RevisionControl;
 EOF
 
-%{__mv} doc/svncpp/html .
+%__mv doc/svncpp/html .
 
 %find_lang %{name}
 
-%if %mdkversion < 200900
-%post
-%update_menus
-%update_icon_cache hicolor
-%endif
-
-%if %mdkversion < 200900
-%postun
-%clean_menus
-%clean_icon_cache hicolor
-%endif
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %clean
-%{__rm} -rf %{buildroot}
+%__rm -rf %{buildroot}
 
 %files -f %{name}.lang
 %defattr(-,root,root)
