@@ -1,0 +1,24 @@
+diff -Naur rapidsvn-0.12.0-1/configure.in rapidsvn-0.12.0-1.tpg/configure.in
+--- rapidsvn-0.12.0-1/configure.in	2009-10-20 07:01:16.000000000 +0000
++++ rapidsvn-0.12.0-1.tpg/configure.in	2009-11-08 14:44:23.000000000 +0000
+@@ -84,7 +84,7 @@
+     AC_MSG_ERROR([APR util is required. Try --with-apu-config.])
+ fi
+ CPPFLAGS="$CPPFLAGS `$APU_CONFIG --includes`"
+-APR_LIBS="$APR_LIBS `$APU_CONFIG --link-ld --libs`"
++APR_LIBS="$APR_LIBS `$APU_CONFIG --avoid-ldap --link-ld --libs`"
+ 
+ 
+ dnl
+diff -Naur rapidsvn-0.12.0-1/src/svncpp/Makefile.am rapidsvn-0.12.0-1.tpg/src/svncpp/Makefile.am
+--- rapidsvn-0.12.0-1/src/svncpp/Makefile.am	2009-10-20 06:49:09.000000000 +0000
++++ rapidsvn-0.12.0-1.tpg/src/svncpp/Makefile.am	2009-11-08 14:45:11.000000000 +0000
+@@ -2,7 +2,7 @@
+ 
+ lib_LTLIBRARIES=libsvncpp.la
+ 
+-libsvncpp_la_LDFLAGS=-version-info 3:0:0
++libsvncpp_la_LDFLAGS=$(APR_LIBS) $(SVN_LIBS) -version-info 3:0:0
+ libsvncpp_la_SOURCES= \
+ 	apr.cpp \
+ 	client.cpp \
