@@ -19,7 +19,7 @@ BuildRequires:	subversion-devel >= 1.2
 BuildRequires:	subversion >= 1.2
 BuildRequires:	libtool >= 1.4.2
 BuildRequires:	wxgtku-devel
-BuildRequires:	libxslt-proc
+BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	docbook-style-xsl
 BuildRequires:	pkgconfig(neon)
 BuildRequires:	imagemagick
