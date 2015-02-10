@@ -14,6 +14,7 @@ Source1:	rapidsvn_logo.png
 Patch1:		rapidsvn-0.12.0-linkage_fix.patch
 BuildRequires:	docbook-style-xsl
 BuildRequires:	doxygen
+BuildRequires:	db-devel
 BuildRequires:	imagemagick
 BuildRequires:	libtool >= 1.4.2
 BuildRequires:	subversion >= 1.2
