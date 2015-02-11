@@ -4,13 +4,15 @@
 
 Summary:	A cross-platform GUI for the Subversion concurrent versioning system
 Name:		rapidsvn
-Version:	0.12.0
-Release:	19
+Version:	0.12.1
+Release:	1
 License:	GPLv2+
 Group:		Development/Other
 Url:		http://rapidsvn.tigris.org
-Source0:	http://www.rapidsvn.org/download/release/%{version}/%{name}-%{version}-1.tar.gz
+Source0:	http://www.rapidsvn.org/download/release/%{version}/%{name}-%{version}.tar.gz
 Source1:	rapidsvn_logo.png
+# missing from build
+Source2:	svncpp.dox
 Patch1:		rapidsvn-0.12.0-linkage_fix.patch
 BuildRequires:	docbook-style-xsl
 BuildRequires:	doxygen
@@ -56,11 +58,13 @@ interface to any project that uses C++ or a SWIG-compatible
 language like Python or Java. 
 
 %prep
-%setup -qn %{name}-%{version}-1
+%setup -qn %{name}-%{version}
 %apply_patches
+sed -i 's/python/python2/' src/locale/Makefile.*
 autoreconf -fi
 
 cp %{SOURCE1} rapidsvn_logo.png
+cp -p %{SOURCE2} doc/svncpp/
 
 %build
 export CFLAGS="%{optflags} -fno-strict-aliasing"
