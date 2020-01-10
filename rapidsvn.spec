@@ -60,7 +60,7 @@ language like Python or Java.
 
 %prep
 %setup -qn %{name}-%{version}
-%apply_patches
+%autopatch -p1
 sed -i 's/python/python2/' src/locale/Makefile.*
 autoreconf -fi
 
