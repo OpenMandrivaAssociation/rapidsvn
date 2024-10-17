@@ -8,7 +8,7 @@ Version:	0.12.1
 Release:	3
 License:	GPLv2+
 Group:		Development/Other
-Url:		http://rapidsvn.tigris.org
+Url:		https://rapidsvn.tigris.org
 Source0:	http://www.rapidsvn.org/download/release/%{version}/%{name}-%{version}.tar.gz
 Source1:	rapidsvn_logo.png
 # missing from build
