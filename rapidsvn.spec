@@ -14,6 +14,11 @@ Source1:	rapidsvn_logo.png
 # missing from build
 Source2:	svncpp.dox
 Patch1:		rapidsvn-0.12.0-linkage_fix.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	docbook-style-xsl
 BuildRequires:	doxygen
 BuildRequires:	db-devel
